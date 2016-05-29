@@ -1,7 +1,6 @@
 package au.com.mehdi.replacer.util;
 
 import java.util.Locale;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /**
@@ -12,6 +11,13 @@ public class ConfigurationUtil {
     private static ConfigurationUtil ourInstance;
 
     private ResourceBundle labels;
+
+    private ConfigurationUtil() {
+        labels = ResourceBundle.getBundle("ui_labels", Locale.getDefault());
+        if (labels == null) {
+            labels = ResourceBundle.getBundle("ui_labels");
+        }
+    }
 
     public static ConfigurationUtil getInstance() {
         if (ourInstance == null) {
@@ -25,15 +31,9 @@ public class ConfigurationUtil {
         return ourInstance;
     }
 
-    private ConfigurationUtil() {
-        labels = ResourceBundle.getBundle("ui_labels", Locale.getDefault());
-        if(labels == null){
-            labels = ResourceBundle.getBundle("ui_labels");
-        }
-    }
-
     /**
      * Fetch value assigned to this key from resource bundle and return it.
+     *
      * @param key for string value
      * @return if key is null returns "", if there is no value for this key return the key
      */
