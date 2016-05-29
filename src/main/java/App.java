@@ -1,5 +1,4 @@
 import au.com.mehdi.replacer.ui.ReplacerMainFrame;
-import au.com.mehdi.replacer.util.ConfigurationUtil;
 
 import javax.swing.*;
 
@@ -12,7 +11,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() ->{
+        SwingUtilities.invokeLater(() -> {
             new ReplacerMainFrame();
         });
     }
