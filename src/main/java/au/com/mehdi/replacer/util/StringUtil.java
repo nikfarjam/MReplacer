@@ -7,6 +7,7 @@ public interface StringUtil {
 
     /**
      * check if a string is null or empty
+     *
      * @param str string value which is checked
      * @return true, when the input is null or ""
      */
