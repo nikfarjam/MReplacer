@@ -29,7 +29,7 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
 
         add(panel, BorderLayout.CENTER);
 
-        setSize(400, 150);
+        setSize(420, 150);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
