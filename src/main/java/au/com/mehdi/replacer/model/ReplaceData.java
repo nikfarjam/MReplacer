@@ -1,9 +1,9 @@
-package au.com.mehdi.replacer.data;
+package au.com.mehdi.replacer.model;
 
 import java.io.File;
 
 /**
- * Java bean for user input data
+ * Java bean for user input model
  */
 public class ReplaceData {
 
