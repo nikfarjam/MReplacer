@@ -1,6 +1,6 @@
 package au.com.mehdi.replacer.ui;
 
-import au.com.mehdi.replacer.data.ReplaceData;
+import au.com.mehdi.replacer.model.ReplaceData;
 import au.com.mehdi.replacer.util.ConfigurationUtil;
 import au.com.mehdi.replacer.util.UIFactory;
 
