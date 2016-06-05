@@ -12,4 +12,7 @@ public class LabelConstants {
     public static final String LABEL_PATH = "ui.main.label.path";
     public static final String REGULAR_EXPRESSION = "ui.main.label.regular_expression";
     public static final String LABEL_PATTERN = "ui.main.label.pattern";
+    public static final String TABLE_PARAMETER = "ui.main.table.parameter";
+    public static final String TABLE_VALUE = "ui.main.table.value";
+    public static final String LABEL_TABLE = "ui.main.table.label";
 }
