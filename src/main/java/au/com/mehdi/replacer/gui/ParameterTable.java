@@ -1,4 +1,4 @@
-package au.com.mehdi.replacer.ui;
+package au.com.mehdi.replacer.gui;
 
 import javax.swing.*;
 

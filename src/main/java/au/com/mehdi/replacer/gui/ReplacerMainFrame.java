@@ -1,4 +1,4 @@
-package au.com.mehdi.replacer.ui;
+package au.com.mehdi.replacer.gui;
 
 import au.com.mehdi.replacer.util.ConfigurationUtil;
 import au.com.mehdi.replacer.util.LabelConstants;

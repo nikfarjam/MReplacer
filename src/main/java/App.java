@@ -1,4 +1,4 @@
-import au.com.mehdi.replacer.ui.ReplacerMainFrame;
+import au.com.mehdi.replacer.gui.ReplacerMainFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
