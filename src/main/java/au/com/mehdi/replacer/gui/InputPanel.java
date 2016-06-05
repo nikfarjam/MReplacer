@@ -27,7 +27,7 @@ public class InputPanel extends JPanel implements InputForm {
     public InputPanel() {
         setLayout(new GridBagLayout());
         Border innerBorder = BorderFactory.createTitledBorder(ConfigurationUtil.getInstance().getValue(BUTTON_REPLACE));
-        Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+        Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 0, 5);
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
         Dimension textFieldDimension = new Dimension(200, 24);
@@ -81,7 +81,7 @@ public class InputPanel extends JPanel implements InputForm {
         gc11.gridx = 1;
         gc11.gridy = 1;
         gc11.anchor = GridBagConstraints.LINE_START;
-        gc11.insets = new Insets(-15, 0, 0, 0);
+        gc11.insets = new Insets(0, 0, 0, 0);
         add(refExPanel, gc11);
 
         GridBagConstraints gc20 = new GridBagConstraints();
