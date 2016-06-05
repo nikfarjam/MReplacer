@@ -23,14 +23,23 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+//        panel.setLayout(new BorderLayout());
         inputPanel = new InputPanel();
         panel.add(inputPanel, BorderLayout.CENTER);
 
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BorderLayout());
+        Dimension buttonPanelSize = buttonPanel.getPreferredSize();
+        buttonPanelSize.width =100;
+        buttonPanel.setPreferredSize(buttonPanelSize);
         jbReplace = UIFactory.createButton(LabelConstants.BUTTON_SEARCH);
+        jbReplace.setPreferredSize(new Dimension(100, 50));
+        buttonPanel.add(jbReplace, BorderLayout.EAST);
+
+        panel.add(buttonPanel);
 
         add(panel, BorderLayout.CENTER);
-        add(jbReplace, BorderLayout.AFTER_LAST_LINE);
 
         setSize(420, 180);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
