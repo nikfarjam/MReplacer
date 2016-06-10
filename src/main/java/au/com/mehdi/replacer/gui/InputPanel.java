@@ -23,87 +23,101 @@ public class InputPanel extends JPanel implements InputForm {
     private JButton jbOpen;
     private JFileChooser jfcPath;
 
+    private File file;
 
     public InputPanel() {
+        createComponents();
+
         setLayout(new GridBagLayout());
-        Border innerBorder = BorderFactory.createTitledBorder(ConfigurationUtil.getInstance().getValue(BUTTON_REPLACE));
-        Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 0, 5);
-        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+        setBorder(createBorder());
+        addFirstRow();
+        addSecondRow();
+        addThirdRow();
+    }
 
-        Dimension textFieldDimension = new Dimension(200, 24);
+    private void createComponents() {
         jfcPath = new JFileChooser();
-
-        JLabel ljPattern = UIFactory.createLabel(LABEL_PATTERN);
         jtPattern = new JTextField(20);
-        jtPattern.setPreferredSize(textFieldDimension);
-        JLabel ljRefEx = UIFactory.createLabel(REGULAR_EXPRESSION);
-        jcRegEx = new JCheckBox();
+        jtPath = new JTextField(20);
+        jtPath.setEnabled(false);
+        jbOpen = UIFactory.createButton(BUTTON_OPEN, (ActionListener) e -> {
+            jfcPath.setCurrentDirectory(new File(System.getProperty("user.home")));
+            if (JFileChooser.APPROVE_OPTION == jfcPath.showOpenDialog(this)) {
+                file = jfcPath.getSelectedFile();
+                jtPath.setText(file.getAbsolutePath());
+            }
+        });
+    }
+
+    private void addFirstRow() {
+        GridBagConstraints gc1 = new GridBagConstraints();
+        gc1.weightx = 1;
+        gc1.weighty = 0.1;
+        gc1.gridx = 0;
+        gc1.gridy = 0;
+        gc1.fill = GridBagConstraints.NONE;
+        gc1.anchor = GridBagConstraints.LINE_END;
+        gc1.insets = new Insets(0, 0, 0, 5);
+
+        add(UIFactory.createLabel(LABEL_PATTERN), gc1);
+
+        GridBagConstraints gc2 = new GridBagConstraints();
+        gc2.weightx = 1;
+        gc2.weighty = 0.9;
+        gc2.gridx = 1;
+        gc2.gridy = 0;
+        gc2.anchor = GridBagConstraints.LINE_START;
+        add(jtPattern, gc2);
+    }
+
+    private void addSecondRow() {
+        JPanel refExPanel = createRegularExpressionPanel();
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = 1;
+        gc.gridy = 1;
+        gc.weighty = 0.5;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0, 0, 0, 0);
+        add(refExPanel, gc);
+    }
+
+    private void addThirdRow() {
+        GridBagConstraints gc1 = new GridBagConstraints();
+        gc1.weightx = 1;
+        gc1.weighty = 0.5;
+        gc1.gridx = 0;
+        gc1.gridy = 2;
+        gc1.anchor = GridBagConstraints.LINE_END;
+        add(UIFactory.createLabel(LABEL_PATH), gc1);
+
+        GridBagConstraints gc2 = new GridBagConstraints();
+        gc2.gridx = 1;
+        gc2.gridy = 2;
+        gc2.anchor = GridBagConstraints.LINE_START;
+        add(jtPath, gc2);
+
+        GridBagConstraints gc3 = new GridBagConstraints();
+        gc3.gridx = 2;
+        gc3.gridy = 2;
+        gc3.anchor = GridBagConstraints.LINE_START;
+        add(jbOpen, gc3);
+    }
+
+    private JPanel createRegularExpressionPanel() {
         JPanel refExPanel = new JPanel();
         refExPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         refExPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        JLabel ljRefEx = UIFactory.createLabel(REGULAR_EXPRESSION);
+        jcRegEx = new JCheckBox();
         refExPanel.add(ljRefEx);
         refExPanel.add(jcRegEx);
+        return refExPanel;
+    }
 
-        JLabel ljPath = UIFactory.createLabel(LABEL_PATH);
-        jtPath = new JTextField(20);
-        jtPath.setEnabled(false);
-        jtPath.setPreferredSize(textFieldDimension);
-        jbOpen = UIFactory.createButton(BUTTON_OPEN, (ActionListener) e -> {
-            jfcPath.setCurrentDirectory(new File(System.getProperty("user.home")));
-            int result = jfcPath.showOpenDialog(this);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = jfcPath.getSelectedFile();
-                jtPath.setText(selectedFile.getAbsolutePath());
-            }
-        });
-
-
-        GridBagConstraints gc00 = new GridBagConstraints();
-        gc00.weightx = 1;
-        gc00.weighty = 0.1;
-        gc00.gridx = 0;
-        gc00.gridy = 0;
-        gc00.fill = GridBagConstraints.NONE;
-        gc00.anchor = GridBagConstraints.LINE_END;
-        gc00.insets = new Insets(0, 0, 0, 5);
-
-        add(ljPattern, gc00);
-
-        GridBagConstraints gc01 = new GridBagConstraints();
-        gc01.weightx = 1;
-        gc01.weighty = 0.9;
-        gc01.gridx = 1;
-        gc01.gridy = 0;
-        gc01.anchor = GridBagConstraints.LINE_START;
-        add(jtPattern, gc01);
-
-        GridBagConstraints gc11 = new GridBagConstraints();
-        gc11.gridx = 1;
-        gc11.gridy = 1;
-        gc11.anchor = GridBagConstraints.LINE_START;
-        gc11.insets = new Insets(0, 0, 0, 0);
-        add(refExPanel, gc11);
-
-        GridBagConstraints gc20 = new GridBagConstraints();
-        gc01.weightx = 1;
-        gc01.weighty = 0.5;
-        gc20.gridx = 0;
-        gc20.gridy = 2;
-        gc20.anchor = GridBagConstraints.LINE_END;
-        add(ljPath, gc20);
-
-        GridBagConstraints gc21 = new GridBagConstraints();
-        gc21.gridx = 1;
-        gc21.gridy = 2;
-        gc21.anchor = GridBagConstraints.LINE_START;
-        add(jtPath, gc21);
-
-        GridBagConstraints gc22 = new GridBagConstraints();
-        gc22.gridx = 2;
-        gc22.gridy = 2;
-        gc22.anchor = GridBagConstraints.LINE_START;
-        add(jbOpen, gc22);
-
+    private Border createBorder() {
+        Border innerBorder = BorderFactory.createTitledBorder(ConfigurationUtil.getInstance().getValue(BUTTON_REPLACE));
+        Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 0, 5);
+        return BorderFactory.createCompoundBorder(outerBorder, innerBorder);
     }
 
     @Override
