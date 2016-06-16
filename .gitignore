@@ -12,3 +12,4 @@ buildNumber.properties
 ### Idea template
 .idea/
 MReplacer.iml
+logfile.log

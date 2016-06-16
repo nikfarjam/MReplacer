@@ -1,6 +1,6 @@
-package au.com.mehdi.replacer.ui;
+package au.com.mehdi.replacer.gui;
 
-import au.com.mehdi.replacer.data.ReplaceData;
+import au.com.mehdi.replacer.model.ReplaceData;
 
 /**
  * Created by mehdi on 5/29/16.
