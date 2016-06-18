@@ -26,6 +26,7 @@ public class TablePanel extends JPanel {
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         tableModel = new ParameterTableModel();
         table = new JTable(tableModel);
+        table.setDefaultRenderer(Object.class, new ColourCellRenderer());
         add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
