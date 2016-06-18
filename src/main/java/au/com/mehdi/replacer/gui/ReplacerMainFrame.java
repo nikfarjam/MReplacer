@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * Main Frame
@@ -41,7 +40,6 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         panel.add(buttonPanel);
 
         TablePanel tablePanel = new TablePanel();
-        tablePanel.setData(new ArrayList<>());
         panel.add(tablePanel);
 
         add(panel, BorderLayout.CENTER);
