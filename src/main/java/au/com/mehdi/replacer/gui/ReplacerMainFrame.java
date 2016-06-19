@@ -9,13 +9,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static au.com.mehdi.replacer.util.LabelConstants.BUTTON_CANCEL;
+
 /**
  * Main Frame
  */
 public class ReplacerMainFrame extends JFrame implements ActionListener {
 
     private InputPanel inputPanel;
-    private JTable jtParam;
+    private JButton jbCancel;
     private JButton jbReplace;
 
     public ReplacerMainFrame() throws HeadlessException {
@@ -37,6 +39,10 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         jbReplace.setPreferredSize(new Dimension(100, 50));
         jbReplace.setEnabled(false);
         buttonPanel.add(jbReplace, BorderLayout.EAST);
+        jbCancel = UIFactory.createButton(BUTTON_CANCEL);
+        jbCancel.setEnabled(false);
+        jbCancel.setPreferredSize(new Dimension(100, 50));
+        buttonPanel.add(jbCancel, BorderLayout.CENTER);
 
         panel.add(buttonPanel);
 
