@@ -35,6 +35,7 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         buttonPanel.setPreferredSize(buttonPanelSize);
         jbReplace = UIFactory.createButton(LabelConstants.BUTTON_SEARCH);
         jbReplace.setPreferredSize(new Dimension(100, 50));
+        jbReplace.setEnabled(false);
         buttonPanel.add(jbReplace, BorderLayout.EAST);
 
         panel.add(buttonPanel);
