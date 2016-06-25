@@ -1,0 +1,3 @@
+ip = $ip
+port = $port
+path = $path
