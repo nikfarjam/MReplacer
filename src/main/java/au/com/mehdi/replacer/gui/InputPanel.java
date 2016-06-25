@@ -24,6 +24,7 @@ public class InputPanel extends JPanel implements InputForm {
     private JFileChooser jfcPath;
 
     private File file;
+    private InputPanelListener listener;
 
     public InputPanel() {
         createComponents();
@@ -33,6 +34,10 @@ public class InputPanel extends JPanel implements InputForm {
         addFirstRow();
         addSecondRow();
         addThirdRow();
+    }
+
+    public void setListener(InputPanelListener listener) {
+        this.listener = listener;
     }
 
     private void createComponents() {
@@ -47,11 +52,17 @@ public class InputPanel extends JPanel implements InputForm {
         jtPath.setName("txt_path");
         jbOpen = UIFactory.createButton(BUTTON_OPEN, (ActionListener) e -> {
             jfcPath.setCurrentDirectory(new File(System.getProperty("user.home")));
-            if (JFileChooser.APPROVE_OPTION == jfcPath.showOpenDialog(this)) {
+            int ret = jfcPath.showOpenDialog(this);
+            System.out.println("ret = " + ret);
+            if (JFileChooser.APPROVE_OPTION == ret) {
                 file = jfcPath.getSelectedFile();
                 jtPath.setText(file.getAbsolutePath());
+                if (listener != null) {
+                    listener.updateUI();
+                }
             }
         });
+//        jbOpen.addActionListener(listener);
     }
 
     private void addFirstRow() {
