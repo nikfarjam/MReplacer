@@ -27,6 +27,7 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         inputPanel = new InputPanel();
+        inputPanel.setListener(() -> jbReplace.setEnabled(true));
         panel.add(inputPanel);
 
         JPanel buttonPanel = new JPanel();
@@ -35,11 +36,11 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         Dimension buttonPanelSize = buttonPanel.getPreferredSize();
         buttonPanelSize.width = 100;
         buttonPanel.setPreferredSize(buttonPanelSize);
-        jbReplace = UIFactory.createButton(LabelConstants.BUTTON_SEARCH);
+        jbReplace = UIFactory.createButton(LabelConstants.BUTTON_SEARCH, this);
         jbReplace.setPreferredSize(new Dimension(100, 50));
         jbReplace.setEnabled(false);
         buttonPanel.add(jbReplace, BorderLayout.EAST);
-        jbCancel = UIFactory.createButton(BUTTON_CANCEL);
+        jbCancel = UIFactory.createButton(BUTTON_CANCEL, this);
         jbCancel.setEnabled(false);
         jbCancel.setPreferredSize(new Dimension(100, 50));
         buttonPanel.add(jbCancel, BorderLayout.CENTER);
@@ -58,6 +59,13 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton) e.getSource();
+        if (source == jbReplace) {
+            return;
+        } else if (source == jbCancel) {
+            return;
+        }
+        throw new UnsupportedOperationException();
 
     }
 }
