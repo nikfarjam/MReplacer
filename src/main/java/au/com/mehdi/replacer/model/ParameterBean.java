@@ -3,11 +3,18 @@ package au.com.mehdi.replacer.model;
 import java.util.Objects;
 
 /**
- * Created by mehdi on 6/5/16.
+ * Java Bean for table rows
  */
 public class ParameterBean {
 
+    /**
+     * string value for parameter
+     */
     private String parameter;
+
+    /**
+     * assigned value for parameter
+     */
     private String value;
 
     public ParameterBean(String parameter, String value) {
