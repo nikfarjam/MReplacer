@@ -53,7 +53,6 @@ public class InputPanel extends JPanel implements InputForm {
         jbOpen = UIFactory.createButton(BUTTON_OPEN, (ActionListener) e -> {
             jfcPath.setCurrentDirectory(new File(System.getProperty("user.home")));
             int ret = jfcPath.showOpenDialog(this);
-            System.out.println("ret = " + ret);
             if (JFileChooser.APPROVE_OPTION == ret) {
                 file = jfcPath.getSelectedFile();
                 jtPath.setText(file.getAbsolutePath());
@@ -62,7 +61,6 @@ public class InputPanel extends JPanel implements InputForm {
                 }
             }
         });
-//        jbOpen.addActionListener(listener);
     }
 
     private void addFirstRow() {
