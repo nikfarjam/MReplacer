@@ -3,7 +3,10 @@ package au.com.mehdi.replacer.util;
 /**
  * Util class for String operations
  */
-public interface StringUtil {
+public class StringUtil {
+
+    private StringUtil() {
+    }
 
     /**
      * check if a string is null or empty
