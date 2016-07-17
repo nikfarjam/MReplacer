@@ -25,5 +25,9 @@ public class StringUtilTest {
         String origin = String.valueOf(sample);
         StringUtil.isEmpty(sample);
         assertEquals(sample, origin);
+
+        sample = null;
+        StringUtil.isEmpty(sample);
+        assertNull(sample);
     }
 }
