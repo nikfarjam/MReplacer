@@ -18,9 +18,6 @@ public class StringUtil {
         if (str == null) {
             return true;
         }
-        if (str.length() == 0) {
-            return true;
-        }
-        return str.replaceAll(" ", "").length() == 0;
+        return str.isEmpty() || str.replaceAll(" ", "").isEmpty();
     }
 }
