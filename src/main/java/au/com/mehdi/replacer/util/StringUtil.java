@@ -14,7 +14,7 @@ public class StringUtil {
      * @param str string value which is checked
      * @return true, when the input is null or ""
      */
-    static boolean isEmpty(final String str) {
+    public static boolean isEmpty(final String str) {
         if (str == null) {
             return true;
         }
