@@ -24,6 +24,7 @@ public class InputPanel extends JPanel implements InputForm {
     private JFileChooser jfcPath;
 
     private File file;
+    private InputPanelListener listener;
 
     public InputPanel() {
         createComponents();
@@ -35,16 +36,29 @@ public class InputPanel extends JPanel implements InputForm {
         addThirdRow();
     }
 
+    public void setListener(InputPanelListener listener) {
+        this.listener = listener;
+    }
+
     private void createComponents() {
         jfcPath = new JFileChooser();
+        jfcPath.setName("path_filechooser");
         jtPattern = new JTextField(20);
+        jtPattern.setName("txt_pattern");
+        jcRegEx = new JCheckBox();
+        jcRegEx.setName("chk_regularExpr");
         jtPath = new JTextField(20);
         jtPath.setEnabled(false);
+        jtPath.setName("txt_path");
         jbOpen = UIFactory.createButton(BUTTON_OPEN, (ActionListener) e -> {
             jfcPath.setCurrentDirectory(new File(System.getProperty("user.home")));
-            if (JFileChooser.APPROVE_OPTION == jfcPath.showOpenDialog(this)) {
+            int ret = jfcPath.showOpenDialog(this);
+            if (JFileChooser.APPROVE_OPTION == ret) {
                 file = jfcPath.getSelectedFile();
                 jtPath.setText(file.getAbsolutePath());
+                if (listener != null) {
+                    listener.updateUI();
+                }
             }
         });
     }
@@ -108,7 +122,6 @@ public class InputPanel extends JPanel implements InputForm {
         refExPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         refExPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         JLabel ljRefEx = UIFactory.createLabel(REGULAR_EXPRESSION);
-        jcRegEx = new JCheckBox();
         refExPanel.add(ljRefEx);
         refExPanel.add(jcRegEx);
         return refExPanel;

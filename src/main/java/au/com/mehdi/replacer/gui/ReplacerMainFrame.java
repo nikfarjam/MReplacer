@@ -8,7 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
+import static au.com.mehdi.replacer.util.LabelConstants.BUTTON_CANCEL;
 
 /**
  * Main Frame
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class ReplacerMainFrame extends JFrame implements ActionListener {
 
     private InputPanel inputPanel;
-    private JTable jtParam;
+    private JButton jbCancel;
     private JButton jbReplace;
 
     public ReplacerMainFrame() throws HeadlessException {
@@ -26,6 +27,7 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         inputPanel = new InputPanel();
+        inputPanel.setListener(() -> jbReplace.setEnabled(true));
         panel.add(inputPanel);
 
         JPanel buttonPanel = new JPanel();
@@ -34,14 +36,18 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         Dimension buttonPanelSize = buttonPanel.getPreferredSize();
         buttonPanelSize.width = 100;
         buttonPanel.setPreferredSize(buttonPanelSize);
-        jbReplace = UIFactory.createButton(LabelConstants.BUTTON_SEARCH);
+        jbReplace = UIFactory.createButton(LabelConstants.BUTTON_SEARCH, this);
         jbReplace.setPreferredSize(new Dimension(100, 50));
+        jbReplace.setEnabled(false);
         buttonPanel.add(jbReplace, BorderLayout.EAST);
+        jbCancel = UIFactory.createButton(BUTTON_CANCEL, this);
+        jbCancel.setEnabled(false);
+        jbCancel.setPreferredSize(new Dimension(100, 50));
+        buttonPanel.add(jbCancel, BorderLayout.CENTER);
 
         panel.add(buttonPanel);
 
         TablePanel tablePanel = new TablePanel();
-        tablePanel.setData(new ArrayList<>());
         panel.add(tablePanel);
 
         add(panel, BorderLayout.CENTER);
@@ -53,6 +59,13 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton) e.getSource();
+        if (source == jbReplace) {
+            return;
+        } else if (source == jbCancel) {
+            return;
+        }
+        throw new UnsupportedOperationException();
 
     }
 }

@@ -18,6 +18,7 @@ public class UIFactory {
             text = "Unknown";
         }
         JLabel label = new JLabel(text);
+        label.setName(String.format("lbl_%s", key));
         return label;
     }
 
@@ -30,6 +31,7 @@ public class UIFactory {
         if (listeners != null) {
             listeners.forEach(l -> button.addActionListener(l));
         }
+        button.setName(String.format("btn_%s", key));
         return button;
     }
 
@@ -46,6 +48,7 @@ public class UIFactory {
                 }
             }
         }
+        button.setName(String.format("btn_%s", key));
         return button;
     }
 }
