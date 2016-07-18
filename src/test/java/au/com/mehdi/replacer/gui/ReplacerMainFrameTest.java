@@ -1,6 +1,7 @@
 package au.com.mehdi.replacer.gui;
 
 import au.com.mehdi.replacer.util.ConfigurationUtil;
+import au.com.mehdi.replacer.util.FileUtil;
 import au.com.mehdi.replacer.util.LabelConstants;
 import org.fest.swing.data.TableCell;
 import org.fest.swing.finder.JFileChooserFinder;
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import static au.com.mehdi.replacer.util.LabelConstants.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by mehdi on 6/18/16.
@@ -28,7 +30,7 @@ public class ReplacerMainFrameTest {
 
     @Before
     public void setUp() throws Exception {
-        Files.copy(Paths.get(TEST_PATH + "back/" + FILE_1),Paths.get(TEST_PATH + FILE_1), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(Paths.get(TEST_PATH + "back/" + FILE_1), Paths.get(TEST_PATH + FILE_1), StandardCopyOption.REPLACE_EXISTING);
         demo = new FrameFixture(new ReplacerMainFrame());
     }
 
@@ -114,7 +116,7 @@ public class ReplacerMainFrameTest {
         cell00.requireValue("ip");
 
         JTableCellFixture cell01 = getTable().cell(TableCell.row(0).column(1));
-        cell01.requireNotEditable();
+        cell01.requireEditable();
         cell01.requireValue("");
 
         JTableCellFixture cell10 = getTable().cell(TableCell.row(1).column(0));
@@ -122,7 +124,7 @@ public class ReplacerMainFrameTest {
         cell10.requireValue("port");
 
         JTableCellFixture cell11 = getTable().cell(TableCell.row(1).column(1));
-        cell11.requireNotEditable();
+        cell11.requireEditable();
         cell11.requireValue("");
 
         JTableCellFixture cell20 = getTable().cell(TableCell.row(2).column(0));
@@ -130,13 +132,44 @@ public class ReplacerMainFrameTest {
         cell20.requireValue("path");
 
         JTableCellFixture cell21 = getTable().cell(TableCell.row(2).column(1));
-        cell21.requireNotEditable();
+        cell21.requireEditable();
         cell21.requireValue("");
+    }
 
+    @Test
+    public void replacePatternInFile() throws Exception {
+//        given
+        File file = getFile();
+        getTxtPattern().setText("$param");
+        getButtonOpen().click();
+        JFileChooserFixture fileChooser = JFileChooserFinder.findFileChooser().using(demo.robot);
+        fileChooser.setCurrentDirectory(file.getParentFile());
+        fileChooser.selectFile(file.getAbsoluteFile());
+        fileChooser.approve();
+        getButtonSearch().click();
+        demo.robot.waitForIdle();
+
+//        when
+        getTable().cell(TableCell.row(0).column(1)).enterValue("127.0.0.1");
+        getTable().cell(TableCell.row(1).column(1)).enterValue("8080");
+        getTable().cell(TableCell.row(2).column(1)).enterValue("/tmp");
+        getButtonSearch().click();
+        waitForTest(2);
+
+//        then
+        assertTrue("After run replace result must as 'src/test/resources/back/basic_test_expected.txt'", FileUtil.isEqual(file, new File("src/test/resources/back/basic_test_expected.txt")));
     }
 
     private File getFile() {
         return new File("src/test/resources/basic_test.txt");
+    }
+
+    private void waitForTest(long l) {
+        try {
+            Thread.sleep(l * 100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private JTextComponentFixture getTxtPattern() {
