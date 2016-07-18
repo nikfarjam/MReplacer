@@ -5,7 +5,6 @@ import au.com.mehdi.replacer.exception.UtilException;
 import java.io.*;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.zip.Adler32;
 
 /**
@@ -34,6 +33,9 @@ public class FileUtil {
         }
         if (f1 == null || f2 == null) {
             return false;
+        }
+        if(f1.isDirectory() || f2.isDirectory()){
+            throw new UtilException("Both file must not be directory");
         }
         if (StringUtil.isEmpty(f1.getAbsolutePath()) && !StringUtil.isEmpty(f2.getAbsolutePath())){
             return false;
