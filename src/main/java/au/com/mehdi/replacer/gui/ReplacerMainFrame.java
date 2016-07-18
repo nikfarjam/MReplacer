@@ -27,7 +27,10 @@ public class ReplacerMainFrame extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         inputPanel = new InputPanel();
-        inputPanel.setListener(() -> jbReplace.setEnabled(true));
+        inputPanel.setListener(() -> {
+            jbReplace.setEnabled(true);
+//            jbReplace.setText(ConfigurationUtil.getInstance().getValue(LabelConstants.BUTTON_REPLACE));
+        });
         panel.add(inputPanel);
 
         JPanel buttonPanel = new JPanel();
