@@ -1,5 +1,6 @@
 package au.com.mehdi.replacer.util;
 
+import au.com.mehdi.replacer.exception.UtilException;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -94,6 +95,13 @@ public class FileUtilTest {
         assertTrue(FileUtil.isExactEqual(null, null));
         assertFalse(FileUtil.isExactEqual(firstFile, null));
         assertFalse(FileUtil.isExactEqual(null, firstFile));
+    }
+
+    @Test
+    public void sameFileIsExactEqual() throws UtilException {
+        assertTrue(FileUtil.isExactEqual(null, null));
+        assertTrue(FileUtil.isExactEqual(firstFile, firstFile));
+        assertTrue(FileUtil.isExactEqual(firstFile, new File(firstFile.getAbsolutePath())));
     }
 
 }
