@@ -8,12 +8,14 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.junit.Assert.assertFalse;
@@ -47,6 +49,9 @@ public class FileUtilTest {
     }
 
     private static void eraseTestEnvironment() {
+        if (true){
+            return;
+        }
         if (!Files.exists(testEnvironment)) {
             return;
         }
@@ -104,4 +109,23 @@ public class FileUtilTest {
         assertTrue(FileUtil.isExactEqual(firstFile, new File(firstFile.getAbsolutePath())));
     }
 
+    @Test
+    public void duplicatedFilesIsExactEqual() throws Exception {
+        Path dupFilePath = FileSystems.getDefault().getPath(testEnvironment.toString(), "fu_first_file2.txt");
+        Files.copy(firstFile.toPath(),  dupFilePath, REPLACE_EXISTING);
+        File duplicated = dupFilePath.toFile();
+        assertTrue(FileUtil.isExactEqual(duplicated, firstFile));
+    }
+
+    @Test
+    public void duplicatedFilesAfterChangeIsNotExactEqual() throws Exception {
+        Path dupFilePath = FileSystems.getDefault().getPath(testEnvironment.toString(), "fu_first_file3.txt");
+        try (Stream<String> input = Files.lines(firstFile.toPath());
+             PrintWriter output = new PrintWriter(dupFilePath.toFile(), "UTF-8")) {
+            input.map(s -> s.replaceAll("i", "o"))
+                    .forEachOrdered(output::println);
+        }
+
+        assertFalse(FileUtil.isExactEqual(dupFilePath.toFile(), firstFile));
+    }
 }
