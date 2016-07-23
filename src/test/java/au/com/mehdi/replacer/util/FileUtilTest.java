@@ -11,6 +11,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.junit.Assert.assertTrue;
@@ -20,7 +22,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class FileUtilTest {
 
-    private final static String FIRST_TEST_FILE = "basic_test.txt";
+    private final static String FIRST_TEST_FILE = "fu_first_file.txt";
     private final static String ENVIRONMENT = "env";
     private final static String BACK_UP = "back";
     private static final String TEST_PATH = "src/test/resources/";
@@ -64,14 +66,17 @@ public class FileUtilTest {
 
     private static void createTestEnvironment() {
         try {
-            Files.copy(testFileBackup, testEnvironment, REPLACE_EXISTING);
-            Files.list(testFileBackup).filter(p -> p.getFileName().toString().startsWith("fu_")).forEach(s -> {
+            Predicate<Path> isFileUtilTest = p -> p.getFileName().toString().startsWith("fu_");
+            Consumer<Path> copyFileToTestEnv = s -> {
                 try {
                     Files.copy(s, Paths.get(testEnvironment.toString(), s.getFileName().toString()), REPLACE_EXISTING);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            });
+            };
+
+            Files.copy(testFileBackup, testEnvironment, REPLACE_EXISTING);
+            Files.list(testFileBackup).filter(isFileUtilTest).forEach(copyFileToTestEnv);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,15 +84,15 @@ public class FileUtilTest {
 
     @Before
     public void setUp() throws Exception {
-//        firstFile = Paths.
-//                new File(PATH_ENVIRONMENT + "/" + FIRST_TEST_FILE);
-
+        firstFile = new File(testEnvironment + "/" + FIRST_TEST_FILE);
+        assertTrue(firstFile.exists());
     }
 
     @Test
     public void avoidNullPointerExceptionInIsExactEqual() throws Exception {
         assertTrue(FileUtil.isExactEqual(null, null));
-
+        assertTrue(FileUtil.isExactEqual(firstFile, null));
+        assertTrue(FileUtil.isExactEqual(null, firstFile));
     }
 
 }
