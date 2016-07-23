@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -91,8 +92,8 @@ public class FileUtilTest {
     @Test
     public void avoidNullPointerExceptionInIsExactEqual() throws Exception {
         assertTrue(FileUtil.isExactEqual(null, null));
-        assertTrue(FileUtil.isExactEqual(firstFile, null));
-        assertTrue(FileUtil.isExactEqual(null, firstFile));
+        assertFalse(FileUtil.isExactEqual(firstFile, null));
+        assertFalse(FileUtil.isExactEqual(null, firstFile));
     }
 
 }
